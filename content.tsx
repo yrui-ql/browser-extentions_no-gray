@@ -36,19 +36,25 @@ const loop = (nodes: HTMLCollection, level = 1) => {
   })
 }
 
+const run = () => {
+  try {
+    loop(document.children)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 storage.watch({
   [GLOBAL_STORE]: (newStore) => {
     console.log(newStore.newValue)
     if (newStore.newValue.opened) {
-      try {
-        console.log(newStore.newValue)
-
-        loop(document.children)
-      } catch (e) {
-        console.log(e)
-      }
+      run()
     } else {
       window.location.reload()
     }
   }
 })
+;(async () => {
+  const res = (await storage.get(GLOBAL_STORE)) as any
+  res.opened && run()
+})()
