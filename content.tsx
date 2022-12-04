@@ -1,10 +1,20 @@
 import type { PlasmoContentScript } from "plasmo"
 
+import { Storage } from "@plasmohq/storage"
+
 export const config: PlasmoContentScript = {
   matches: ["<all_urls>"]
 }
 
 const LEVEL = 6
+
+export const GLOBAL_STORE = "GLOBAL_STORE"
+
+export const defaultGlobalStores = {
+  opened: false
+}
+
+export const storage = new Storage()
 
 /**
  * 去掉css filter: grayScale
@@ -26,6 +36,19 @@ const loop = (nodes: HTMLCollection, level = 1) => {
   })
 }
 
-try {
-  loop(document.children)
-} catch {}
+storage.watch({
+  [GLOBAL_STORE]: (newStore) => {
+    console.log(newStore.newValue)
+    if (newStore.newValue.opened) {
+      try {
+        console.log(newStore.newValue)
+
+        loop(document.children)
+      } catch (e) {
+        console.log(e)
+      }
+    } else {
+      window.location.reload()
+    }
+  }
+})
