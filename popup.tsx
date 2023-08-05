@@ -1,12 +1,12 @@
-import { Switch } from "antd"
-import type { PlasmoContentScript } from "plasmo"
 import React from "react"
+import { Switch } from "antd"
+import type { PlasmoCSConfig } from "plasmo"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { GLOBAL_STORE, defaultGlobalStores } from "~content"
 
-export const config: PlasmoContentScript = {
+export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"]
 }
 

@@ -1,0 +1,9 @@
+#editor
+.vscode
+
+# os
+package-lock.json
+
+#cache
+node_modules
+.eslintcache

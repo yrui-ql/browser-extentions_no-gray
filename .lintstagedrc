@@ -1,0 +1,8 @@
+{
+  "packages/**/*.{ts,tsx,js,jsx}": [
+    "eslint --cache --max-warnings 0 --fix",
+    "prettier  --cache --write"
+  ],
+  "*.json": "prettier  --cache --write",
+  ".{html,css,scss}": "prettier  --cache --write"
+}

@@ -1,12 +1,10 @@
-import type { PlasmoContentScript } from "plasmo"
-
+import type { PlasmoCSConfig } from "plasmo"
 import { Storage } from "@plasmohq/storage"
 
-export const config: PlasmoContentScript = {
+export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"]
 }
 
-const LEVEL = 6
 
 export const GLOBAL_STORE = "GLOBAL_STORE"
 
@@ -15,6 +13,12 @@ export const defaultGlobalStores = {
 }
 
 export const storage = new Storage()
+
+/**
+ * 最多遍历6层
+ * 多了基本没用
+ */
+const LEVEL = 6
 
 /**
  * 去掉css filter: grayScale
@@ -40,21 +44,23 @@ const run = () => {
   try {
     loop(document.children)
   } catch (e) {
-    console.log(e)
+    console.log('%c [ e ]-47-「content」', 'font-size:13px; background:#DCDFE4; color:#56B6C2;', e);
   }
 }
 
 storage.watch({
   [GLOBAL_STORE]: (newStore) => {
-    console.log(newStore.newValue)
     if (newStore.newValue.opened) {
       run()
     } else {
       window.location.reload()
     }
   }
-})
-;(async () => {
+});
+
+(async () => {
   const res = (await storage.get(GLOBAL_STORE)) as any
-  res.opened && run()
+  if (res.opened) {
+    run()
+  }
 })()
