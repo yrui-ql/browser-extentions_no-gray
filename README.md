@@ -1,5 +1,3 @@
-# yql-chrome-extensions_no-gray
-
 >一个可以帮你在特殊时期恢复页面本色的简单拓展
 
 
